@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>39d290db-8545-472e-8cf9-bb2308d2f7e5</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Matlab.py</StartupFile>
+    <StartupFile>MatlabExOne.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Matlab.py" />
+    <Compile Include="MatlabExOne.py" />
+    <Compile Include="MatlabExTwo.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
