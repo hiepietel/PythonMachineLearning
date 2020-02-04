@@ -7,6 +7,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PythonLearn", "PythonLearn\
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Matlab", "Matlab\Matlab.pyproj", "{39D290DB-8545-472E-8CF9-BB2308D2F7E5}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "OpenCV", "OpenCV\OpenCV.pyproj", "{61884A15-6F93-47FC-9D5D-BA94A51334F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,8 @@ Global
 		{9226884A-F289-4B12-A72D-9EF655181C37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39D290DB-8545-472E-8CF9-BB2308D2F7E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{39D290DB-8545-472E-8CF9-BB2308D2F7E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61884A15-6F93-47FC-9D5D-BA94A51334F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61884A15-6F93-47FC-9D5D-BA94A51334F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

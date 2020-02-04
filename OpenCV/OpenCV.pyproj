@@ -1,0 +1,46 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>61884a15-6f93-47fc-9d5d-ba94a51334f7</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>OpenCV.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>OpenCV</Name>
+    <RootNamespace>OpenCV</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="cv_tut.py" />
+    <Compile Include="cv_tut2.py" />
+    <Compile Include="cv_tut3_draw.py" />
+    <Compile Include="cv_tut4_detect.py" />
+    <Compile Include="cv_tut5_treshhold.py" />
+    <Compile Include="cv_tut6_facedetection.py" />
+    <Compile Include="cv_tut6_facedetectionCam.py" />
+    <Compile Include="OpenCV.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="haarcascade_eye_tree_eyeglasses.xml" />
+    <Content Include="haarcascade_frontalface_default.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>
