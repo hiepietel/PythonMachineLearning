@@ -28,6 +28,7 @@
     <Compile Include="cv_tut5_treshhold.py" />
     <Compile Include="cv_tut6_facedetection.py" />
     <Compile Include="cv_tut6_facedetectionCam.py" />
+    <Compile Include="cv_tut7_histogram.py" />
     <Compile Include="OpenCV.py" />
   </ItemGroup>
   <ItemGroup>
