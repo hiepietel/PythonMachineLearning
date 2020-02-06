@@ -20,7 +20,8 @@ h1.hist(img.ravel(), 256, [0,255], '.')
 h2.hist(r.ravel(), 256, [0,255])
 h3.hist(g.ravel(), 256, [0,255])
 h4.hist(b.ravel(), 256, [0,255])
-
+plt.xticks([])
+plt.yticks([])
 plt.show();
 
 fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
