@@ -25,10 +25,10 @@ print(g)
 #jedonstkowa
 print(np.identity(3))
 #random matrix
-print(np.random.rand(2,3,4))
+print(np.random.rand(2, 3, 4))
 #rand int
 print('rand int')
-print(np.random.randint(7,size=(3,3)))
+print(np.random.randint(7, size=(3, 3)))
 print(np.full_like(a.shape, 4))
 
 print(np.full((2,2), 99, dtype='float'))
