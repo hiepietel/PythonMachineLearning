@@ -1,0 +1,9 @@
+import cv2
+import matplotlib.pyplot as plt
+#print(cv2.__version__)
+img = cv2.imread('../img/desert_s.png', 0)
+print(img)
+#common lines
+img = img + 100
+plt.matshow((img))
+plt.show()
