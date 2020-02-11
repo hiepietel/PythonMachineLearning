@@ -1,6 +1,6 @@
 #DATA
-.DATA/*
-
+.DATA/
+.data/
 
 # User-specific stuff
 .idea/**/workspace.xml
