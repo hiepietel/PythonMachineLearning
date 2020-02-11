@@ -5,6 +5,13 @@ from matplotlib import pyplot as plt
 #img = np.zeros((200,200), np.uint8)
 img = cv.imread('../img/flower.jpg', 1)
 img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+
+imgg = cv.imread('../img/flower.jpg', 1)
+hist = cv.calcHist([imgg],[0],None,[256],[0,256])
+plt.hist(imgg.ravel(),256,[0,256]);
+plt.show()
+print(hist)
+print()
 #print(img.shape)
 #cv.imshow('img', img)
 
