@@ -2,6 +2,9 @@
 .DATA/
 .data/
 
+#model
+*.h5
+
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
