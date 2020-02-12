@@ -60,23 +60,37 @@ plt.show()
 
 print(model.metrics_names)
 
-training_score = model.evaluate(X_train,y_train,verbose=0)
-test_score = model.evaluate(X_test,y_test,verbose=0)
+training_score = model.evaluate(X_train, y_train, verbose=0)
+test_score = model.evaluate(X_test, y_test, verbose=0)
 
 test_predictions = model.predict(X_test)
-pred_df = pd.DataFrame(y_test,columns=['Test Y'])
+pred_df = pd.DataFrame(y_test, columns=['Test Y'])
 
 test_predictions = pd.Series(test_predictions.reshape(300,))
-pred_df = pd.concat([pred_df,test_predictions],axis=1)
-pred_df.columns = ['Test Y','Model Predictions']
+pred_df = pd.concat([pred_df, test_predictions], axis=1)
+pred_df.columns = ['Test Y', 'Model Predictions']
 
-sns.scatterplot(x='Test Y',y='Model Predictions',data=pred_df)
+sns.scatterplot(x='Test Y', y='Model Predictions',data=pred_df)
 plt.show()
 
 pred_df['Error'] = pred_df['Test Y'] - pred_df['Model Predictions']
-sns.distplot(pred_df['Error'],bins=50)
+sns.distplot(pred_df['Error'], bins=50)
 plt.show()
 
-from sklearn.metrics import mean_absolute_error,mean_squared_error
-print(mean_absolute_error(pred_df['Test Y'],pred_df['Model Predictions']))
-print(mean_squared_error(pred_df['Test Y'],pred_df['Model Predictions']))
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+print(mean_absolute_error(pred_df['Test Y'], pred_df['Model Predictions']))
+print(mean_squared_error(pred_df['Test Y'], pred_df['Model Predictions']))
+
+new_gem = [[998, 1000]]
+
+new_gem = scaler.transform(new_gem)
+
+print(model.predict(new_gem))
+
+from tensorflow.keras.models import load_model
+
+model.save('my_gem_model.h5')
+
+later_model = load_model('my_gem_model.h5')
+
+print(later_model.predict(new_gem))
