@@ -1,7 +1,7 @@
 #DATA
 .DATA/
 .data/
-
+.cell_images/
 #model
 *.h5
 
