@@ -2,6 +2,7 @@
 .DATA/
 .data/
 .cell_images/
+.img/
 #model
 *.h5
 

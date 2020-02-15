@@ -126,3 +126,10 @@ model.evaluate(test_image_gen)
 pred = model.predict_generator(test_image_gen)
 
 print(pred)
+
+predictions = pred > 0.80
+
+from sklearn.metrics import classification_report, confusion_matrix
+
+print(classification_report(test_image_gen.classes, predictions))
+print(confusion_matrix(test_image_gen.classes, predictions))

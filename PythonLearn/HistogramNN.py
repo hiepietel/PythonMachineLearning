@@ -1,50 +1,56 @@
 import cv2
 from pathlib import Path
 import matplotlib.pyplot as plt
+import seaborn as sns
 path = Path(".")
 
-path = path.glob("../img/*.jpg")
+path = path.glob("../img/desert/*.jpg")
 import pandas as pd
 
-images=[]
+def returnColumns(end):
+        col = []
+        for i in range(end):
+                col.append("img:"+str(i))
+        return col
+
 hists = []
-y_train = pd.DataFrame()
-x_train = pd.DataFrame()
+hists_df = pd.DataFrame()
+
+images_df = pd.DataFrame()
 for imagepath in path:
 
         img = cv2.imread(str(imagepath))
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         img = cv2.resize(img, (1920, 1080))
-        images.append(img)
+
         print(imagepath)
-        hist = pd.DataFrame(cv2.calcHist(img, [0], None, [256], [0, 256]))
-        hists.append(hist)
-        x_train.append(hist)
-        a = pd.DataFrame([1])
-        y_train.append(a)
-#        plt.plot(hist)
-#        plt.xlim([0,256])
-#        plt.show()
-print(len(images))
-print(hist.shape)
-hist_shape = (255)
+        hist = cv2.calcHist(img, [0], None, [256], [0, 256])
+
+        hist_df = pd.DataFrame(hist.reshape(-1, len(hist)), columns=returnColumns(len(hist)))
+        hists_df = hists_df.append(hist_df,ignore_index = True)
 
 
-X_train = pd.DataFrame(hist)
-Y_train = pd.DataFrame(y_train)
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Activation, Conv1D, MaxPool1D, Flatten
+hists_df.plot(kind='line', title='desert', legend=False)
+
+plt.show()
+hists_df.to_csv(r'hist.csv',header=True,index=False)
 
 
-model = Sequential()
-model.add(Flatten())
-model.add(Dense(32, input_shape=(1,256)))
-
-
-model.add(Dense(2, activation='softmax'))
-
-
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-
-model.fit(X_train, epochs=10)
-print(model.summary())
+# X_train = pd.DataFrame(hist)
+# Y_train = pd.DataFrame(y_train)
+# from tensorflow.keras.models import Sequential
+# from tensorflow.keras.layers import Dense, Activation, Conv1D, MaxPool1D, Flatten
+#
+#
+# model = Sequential()
+# model.add(Flatten())
+# model.add(Dense(32, input_shape=(1,256)))
+#
+#
+# model.add(Dense(2, activation='softmax'))
+#
+#
+# model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+#
+# model.fit(X_train, epochs=10)
+# print(model.summary())
