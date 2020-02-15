@@ -1,10 +1,7 @@
 import cv2
 from pathlib import Path
 import matplotlib.pyplot as plt
-import seaborn as sns
-path = Path(".")
 
-path = path.glob("../img/desert/*.jpg")
 import pandas as pd
 
 def returnColumns(end):
@@ -12,6 +9,9 @@ def returnColumns(end):
         for i in range(end):
                 col.append("img:"+str(i))
         return col
+name = 'desert'
+path = Path(".")
+path = path.glob('../img/'+name+'/*.jpg')
 
 hists = []
 hists_df = pd.DataFrame()
@@ -33,7 +33,7 @@ for imagepath in path:
 hists_df.plot(kind='line', title='desert', legend=False)
 
 plt.show()
-hists_df.to_csv(r'hist.csv',header=True,index=False)
+hists_df.to_csv(r''+name+'hist.csv',header=True,index=False)
 
 
 # X_train = pd.DataFrame(hist)

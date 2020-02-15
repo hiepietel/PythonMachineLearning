@@ -3,6 +3,12 @@
 .data/
 .cell_images/
 .img/
+.db/
+#img
+*.jpg
+*.png
+#csv
+*.csv
 #model
 *.h5
 
