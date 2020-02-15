@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv('../DATA/fake_reg.csv')
+df = pd.read_csv('../db/DATA/fake_reg.csv')
 df.head()
 
 import seaborn as sns

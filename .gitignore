@@ -3,7 +3,8 @@
 .data/
 .cell_images/
 .img/
-.db/
+.db/cell_images/
+.db/DATA/
 #img
 *.jpg
 *.png
