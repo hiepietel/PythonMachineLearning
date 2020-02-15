@@ -45,7 +45,6 @@ for imagepath in path:
         hist_df = pd.concat([firstCol, returnHistogram(imagepath)], axis=1)
         hists_df = hists_df.append(hist_df,ignore_index = True, sort=False)
 
-print(hists_df.where(hists_df['isLandmark'] == 1))
 
 landscape_df =  hists_df.where(hists_df['isLandmark'] == 1).dropna()
 landscape_df.plot(kind='line', title='desert', legend=False)
@@ -112,11 +111,7 @@ model.fit(x=X_train,
           )
 from tensorflow.keras.models import load_model
 
-model.save('full_data_project_model.h5')
+model.save('../db/Model/desert_model.h5')
+print("exit")
 
 
-test = returnHistogram('..\db\img\desert\pink_desert_2-wallpaper-1920x1080.jpg')
-print(model.predict_classes(test))
-
-test = returnHistogram('..\db\img\\fake\\bmw_745le_xdrive_m_sport_policie_2019-1920x1080.jpg')
-print(model.predict_classes(test))
