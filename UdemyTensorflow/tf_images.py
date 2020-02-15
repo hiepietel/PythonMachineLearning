@@ -115,7 +115,7 @@ print(train_image_gen.class_indices)
 
 from tensorflow.keras.models import load_model
 
-model = load_model('../Model/malaria_detector.h5')
+model = load_model('../db/Model/malaria_detector.h5')
 
 print(model.summary())
 
