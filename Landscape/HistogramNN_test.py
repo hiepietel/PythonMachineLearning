@@ -30,9 +30,18 @@ path = Path(".")
 path = path.glob('../db/img/'+name+'/*.jpg')
 
 for imagepath in path:
-    test = returnHistogram(imagepath).values.reshape(1,256)
+    test_df = returnHistogram(imagepath).values
     #print(test)
     image = str(imagepath).split('\\')
     image = image[len(image)-1]
-    print(image+": "+str(model.predict(test)))
+    message = str(image) + " "+ str(model.predict_classes(returnHistogram(imagepath).values))
+    print(message)
+    #print(model.predict_classes(test_df.reshape(256,1)))
+    #print(image+": "+str(model.predict_classes(test_df)))
+
+from tensorflow.keras.callbacks import TensorBoard
+
+
+
+log_directory ='logs\\fit'
 
