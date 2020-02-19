@@ -57,7 +57,7 @@ model.add(Dropout(0.2))
 model.add(Dense(8, activation='relu'))
 model.add(Dropout(0.2))
 
-model.add(Dense(units=1,activation='sigmoid'))
+model.add(Dense(units=1, activation='sigmoid'))
 
 model.compile(loss='binary_crossentropy', optimizer='adam')
 
@@ -71,6 +71,10 @@ model.fit(x=X_train,
 from tensorflow.keras.models import load_model
 
 model.save('../db/Model/desert_model.h5')
+
+metrics = pd.DataFrame(model.history.history)
+metrics[['loss', 'val_loss']].plot()
+plt.show()
 
 print("exit")
 
