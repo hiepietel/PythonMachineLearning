@@ -9,12 +9,18 @@ c = -65
 v = [-70]
 u = [-14]
 Iapp =7 #pA
-T=1000
-for t in range (T-1):
+T=2000
+for t in range(T-1):
+    if t*timeDelta > 200 and t*timeDelta < 700:
+        Iapp = 7
+    else:
+        Iapp = 0
     if v[t] < 35:
-        v.append(v[t] + timeDelta * ((0.04*v[t]+5)*v[t] - u[t] + 140 + Iapp))
+        dv = (0.04*v[t]+5)*v[t] - u[t] + 140
+        v.append(v[t] + timeDelta * (dv + Iapp))
         u.append(u[t] + timeDelta * a * ( b * v[t] - u[t]))
     else:
+        v[t] = 35
         v.append(c)
         u.append(u[t]+d)
     

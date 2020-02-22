@@ -50,7 +50,6 @@ for t in range(n-1):
             v[i, t] = 35
             v[i, t+1] = -65
             u[i, t+1] =u[i,t] + d[i]
-            print("fired", t)
 
 
 xtable = []
@@ -61,6 +60,9 @@ for i in range(v.shape[0]):
           xtable.append(j)
           ytable.append(i)
 plt.scatter(x = xtable, y = ytable, marker='o', edgecolors='r')
+plt.title('Simulate 1000 neurons (not inter-connected)')
+plt.xlabel('time [ms]')
+plt.ylabel('uint [#]')
 plt.ylim(0, n)
 plt.xlim(0, n)
 plt.show()
