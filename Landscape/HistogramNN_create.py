@@ -16,6 +16,14 @@ def returnColumns(end):
                 col.append("img"+str(i))
         return col
 
+
+def returnCenterPath(imagepath):
+    path = str(imagepath)
+    path = path[0:-4]
+    path = path + "_center.png"
+    return path
+
+
 def returnHistogramCenter(imagepath):
     img = cv2.imread(str(imagepath))
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -29,7 +37,7 @@ def returnHistogramCenter(imagepath):
     plt.imshow(center_img)
     path = str(imagepath)
     path = path[0:-4]
-    plt.savefig(path+"_center.png", figsize=(width/100, height/100))
+    plt.savefig(returnCenterPath(imagepath), figsize=(width/100, height/100))
     #plt.savefig('foo.png')
     plt.close()
 
@@ -70,9 +78,10 @@ for imagepath in path:
         hist_df = pd.concat([firstCol, returnHistogram(imagepath)], axis=1)
         hists_df = hists_df.append(hist_df, ignore_index = True, sort=False)
 
-        hist_df_center = pd.concat([firstCol, returnHistogramCenter(imagepath)], axis=1)
+        first_col_center = pd.DataFrame(data={'imagePath': [returnCenterPath(imagepath)], 'isLandmark': [1]})
+        hist_df_center = pd.concat([first_col_center, returnHistogramCenter(imagepath)], axis=1)
         hists_df_center = hists_df_center.append(hist_df_center, ignore_index = True, sort=False)
-
+print("hist created")
 
 name = 'fake'
 path = Path(".")
@@ -84,10 +93,13 @@ for imagepath in path:
         hist_df = pd.concat([firstCol, returnHistogram(imagepath)], axis=1)
         hists_df = hists_df.append(hist_df,ignore_index = True, sort=False)
 
-        hist_df_center = pd.concat([firstCol, returnHistogramCenter(imagepath)], axis=1)
+        first_col_center = pd.DataFrame(data={'imagePath': [returnCenterPath(imagepath)], 'isLandmark': [0]})
+        hist_df_center = pd.concat([first_col_center, returnHistogramCenter(imagepath)], axis=1)
         hists_df_center = hists_df_center.append(hist_df_center, ignore_index = True, sort=False)
 #  hists_df.where(hists_df['isLandmark'] == 0).plot(kind='line', title='fake', legend=False)
 #  plt.show()
 
 hists_df.to_csv(r'hist.csv', header=True, index=False)
 hists_df_center.to_csv(r'hist_center.csv', header=True, index=False)
+
+print("exit")
