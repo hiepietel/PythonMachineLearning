@@ -11,6 +11,7 @@ img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 imgg = cv.imread('../db/img/desert/algodones_dunes_california-wallpaper-1920x1080.jpg', 1)
 hist = cv.calcHist([imgg],[0],None,[256],[0,256])
 
+#hist = hist[]
 
 
 print(hist)
