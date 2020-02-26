@@ -23,7 +23,7 @@ def returnHistogram(imagepath):
 
     return hist_df
 
-model = load_model('../db/Model/desert_model.h5')
+model = load_model('../db/Model/desert_model_center.h5')
 
 name = 'testDesert'
 path = Path(".")

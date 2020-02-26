@@ -5,6 +5,11 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 import math
 rate = 0.25
+def save_plt(image, title):
+    plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+    plt.title(title)
+    plt.axis('off')
+    plt.savefig(title+".png", bbox_inches='tight')
 
 def region(image):
     height = image.shape[0]
@@ -26,7 +31,7 @@ def display_line(image, lines):
         for line in lines:
             x1, y1, x2, y2 = line.reshape(4)
             angle = math.atan2(y2- y1, x2 - x1) * 180 / np.pi
-            if abs(int(angle)) < 15:
+            if abs(int(angle)) < 5:
                 cv2.line(line_image, (x1, y1), (x2, y2), (0, 0, 255), 10)
     return line_image
 
@@ -45,13 +50,17 @@ def return_img(imagepath):
 
     cropped = region(canny)
 
-    lines = cv2.HoughLinesP(cropped, 2, np.pi / 45, 3, np.array([]), minLineLength=50, maxLineGap=10)
+    lines = cv2.HoughLinesP(cropped, 2, np.pi / 180, 3, np.array([]), minLineLength=40, maxLineGap=20)
     line_image = display_line(lane_image, lines)
 
     combo_image = cv2.addWeighted(lane_image, 0.8, line_image, 1, 1)
 
-    # cv2.imshow("result", combo_image)
-    # cv2.waitKey(0)
+    save_plt(line_image, "line_image")
+    save_plt(canny, "canny")
+    save_plt(cropped, "cropped")
+    save_plt(combo_image, "combo_image")
+
+
     return combo_image
 
 name = 'horizont'
@@ -64,7 +73,9 @@ for imagepath in path:
     plt.imshow(cv2.cvtColor(combo_image, cv2.COLOR_BGR2RGB))
     plt.title("blur")
     plt.show()
-    #break
+
+
+    break
 # plt.imshow(cv2.cvtColor(line_image, cv2.COLOR_BGR2RGB))
 # plt.title("line_image")
 # plt.show()

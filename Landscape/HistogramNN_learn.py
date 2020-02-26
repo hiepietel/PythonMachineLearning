@@ -3,7 +3,14 @@ import matplotlib.pyplot as plt
 
 import pandas as pd
 
-hists_df = pd.read_csv('hist.csv')
+hist_path = [["hist.csv", 'desert_model.h5'],
+             ["hist_center.csv", "desert_model_center.h5"]]
+
+hist_number = 1
+
+
+
+hists_df = pd.read_csv(hist_path[hist_number][0])
 
 X = hists_df.drop('imagePath', axis=1).drop('isLandmark', axis=1).values
 y = hists_df['isLandmark'].values
@@ -69,8 +76,9 @@ model.fit(x=X_train,
           callbacks=[board]
           )
 from tensorflow.keras.models import load_model
-
-model.save('../db/Model/desert_model.h5')
+model_path= '../db/Model/'+hist_path[hist_number][1]
+print(model_path)
+model.save('../db/Model/'+hist_path[hist_number][1])
 
 metrics = pd.DataFrame(model.history.history)
 metrics[['loss', 'val_loss']].plot()
