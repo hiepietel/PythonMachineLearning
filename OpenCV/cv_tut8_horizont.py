@@ -10,6 +10,7 @@ def save_plt(image, title):
     plt.title(title)
     plt.axis('off')
     plt.savefig(title+".png", bbox_inches='tight')
+    plt.show();
 
 def region(image):
     height = image.shape[0]
