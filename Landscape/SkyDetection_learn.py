@@ -5,6 +5,8 @@ from keras.layers import Conv2D, MaxPool2D, Dropout
 from keras.models import Sequential
 
 import matplotlib.pylab as plt
+from matplotlib.image import imread
+
 import numpy as np
 import cv2
 from pathlib import Path
