@@ -66,7 +66,7 @@ plt.xticks([])
 
 
 plt.title('histograms')
-plt.show();
+plt.show()
 #
 # fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
 # fig.suptitle('Sharing x per column, y per row')
