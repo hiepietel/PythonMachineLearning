@@ -6,17 +6,29 @@ from matplotlib import pyplot as plt
 #img = cv.imread('../db/img/desert/algodones_dunes_california-wallpaper-1920x1080.jpg', 1)
 #img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 
+height = 1080
+width = 1920
 
-
-img = cv.imread('../db/img/sky_best_cnv/20170629_224036_HDR_1920_1080.jpg', 1)
+img = cv.imread('../db/img/sky_best_not_converted/20170629_224036_HDR.jpg', 1)
 img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+img = cv.resize(img, (width, height))
+
+
+#img = img.reshape(width, height, 3)
+half_image = np.split(img, int(3))[0]
+
+plt.imshow(half_image)
+plt.show()
+
 
 hist = cv.calcHist([img],[0],None,[256],[0,256])
 
+
+
 #hist = hist[]
 
-for i in range(0, 5):
-    hist[i] = 0
+# for i in range(0, 5):
+#     hist[i] = 0
 
 plt.plot(hist)
 plt.title("hist")
