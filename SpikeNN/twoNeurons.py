@@ -37,8 +37,9 @@ for t in range(T - 1):
         v[t] = 35
         v[t+1] = c
         u[t+1] = u[t] + d
+        Iappp = abs((v[t] - vv[t]) / 20)
 
-    Iappp = np.abs((v[t]-vv[t])/d)
+
 
     if vv[t] < 35:
         dv = (0.04 * vv[t] + 5) * vv[t] - uu[t] + 140
@@ -47,7 +48,7 @@ for t in range(T - 1):
     else:
         vv[t] = 35
         vv[t+1] = c
-        uu[t+1] = u[t] + d
+        uu[t+1] = uu[t] + d
         Iappp = 0
     # plt.plot(t+1, u[t+1])
 
