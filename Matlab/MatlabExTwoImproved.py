@@ -29,7 +29,7 @@ for t in range(T - 1):
         p = np.random.ranf((nin, 1)) < rate * timeDelta
 
     else:
-        p =0
+        p = 0
 
     gin = gin + p
     ginEin = (gin * ein)

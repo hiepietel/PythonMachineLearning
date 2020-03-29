@@ -33,7 +33,7 @@ for t in range(n-1):
     else:
         p = 0
     gin = gin + p
-    ginEin = (gin * Ein)
+
     Iapp = Win * ginEin  #np.matmul(gin,Ein.reshape(1,nin))
     Iapp = Iapp - (Win*gin)
     Iapp = Iapp[:,t] * v[:,t]
