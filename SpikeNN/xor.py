@@ -97,7 +97,7 @@ for t in range(T - 1):
     p01 = 0
     p10 = 0
     p11 = 0
-    border = 2
+    border = 3
     amount = 50
     if t > amount and t % 10 == 0:
         first_amount = 0
@@ -129,24 +129,20 @@ for t in range(T - 1):
     v01.calc(p01)
     v10.calc(p10)
     v11.calc(p11)
-
     p_end = 0
 
     if v00.v[t] == 35 or v11.v[t] == 35:
+        out_0 = 30 + t
+    if v01.v[t] == 35 or v10.v[t] == 35:
         out_1 = 5 + t
-    elif v01.v[t] == 35 or v01.v[t] == 35:
-        out_0 = 3 + t
 
     if out_0 > t:
         p_end = 1
-        out_0 += 1
-    elif out_1 > t:
+    if out_1 > t:
         p_end = 1
-        out_1 += 1
-
 
     v.calc(p_end)
-    p_end = 0
+
 neuron_data = [v0, v1, v00, v01, v10, v11]
 
 fig, axs = plt.subplots(2)
@@ -165,7 +161,7 @@ plt.show()
 
 plt.plot(np.arange(0, timeDelta * T, timeDelta), v.v, np.arange(0, timeDelta * T, timeDelta), v.u)
 
-plt.title('end simulation')
+plt.title('last neuron')
 plt.xlabel('time [ms]')
 plt.ylabel('voltage [mV]')
 plt.show()
