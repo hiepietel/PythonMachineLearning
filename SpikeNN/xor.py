@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 n = 2000
-timeDelta = 0.5  # 5ms
+timeDelta = 0.5  # 5msxor.py
 a = 0.02
 b = 0.2
 d = 8
