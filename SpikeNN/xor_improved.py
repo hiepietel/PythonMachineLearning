@@ -52,11 +52,16 @@ class Neuron:
             self.v[t] = 35
             self.v[t + 1] = c
             self.u[t + 1] = self.u[t] + d
-            self.last_fired = self.fired
+            if self.last_fired + 10 > t:
+                self.last_fired = self.fired
+            else:
+                self.last_fired = -1000
             self.fired = t
 
-    def setCurrent(self, cur, t):
-        self.p[t] = np.average(cur / self.weigth / self.size)
+    def setCurrent(self, cur, t, synaps):
+
+        w = self.weigth[synaps]
+        self.p[t] = np.float(abs(self.p[t] - cur)) * w
 
     def lastFired(self):
         return self.last_fired
@@ -64,72 +69,77 @@ class Neuron:
     def currentFired(self):
         return self.fired
 
-v0 = Neuron(weigth=1)
-v1 = Neuron(weigth=1)
+v0 = Neuron(1, np.array([1]))
+v1 = Neuron(1, np.array([1]))
 
-v00 = Neuron(4, np.array([1, 4, 1, 4]))
-v01 = Neuron(4, np.array([1, 4, 4, 1]))
-v10 = Neuron(4, np.array([4, 1, 1, 4]))
-v11 = Neuron(4, np.array([4, 1, 4, 1]))
+v00 = Neuron(4, np.array([1, 0, 1, 0])/100)
+v01 = Neuron(4, np.array([1, 0, 0, 1])/100)
+v10 = Neuron(4, np.array([0, 1, 1, 0])/100)
+v11 = Neuron(4, np.array([0, 1, 0, 1])/100)
 
-v_true = Neuron(4, np.array([2, 0.25, 0.25, 2]))
-v_false = Neuron(4, np.array([0.25, 2, 2, 0.25]))
+v_false = Neuron(4, np.array([1, 0, 0, 1])/100)
+v_true = Neuron(4, np.array([0, 1, 1, 0])/100)
 
 
-for t in range(T - 1):
-    if t > 30:
-        if int(t * timeDelta % 300) < 10:
-            v0.setCurrent(1, t)
-        elif int(t * timeDelta % 50) < 3:
-            v0.setCurrent(1, t)
+for t in range(T-1):
+    if t > 10:
+        if int(t * timeDelta % 395) < 6:
+            v0.setCurrent(1, t ,0)
+        elif int(t * timeDelta % 112) <2:
+            v0.setCurrent(1, t, 0)
         else:
-            v0.setCurrent(0, t)
+            v0.setCurrent(0, t, 0)
 
-        if int(t * timeDelta % 150) < 10:
-            v1.setCurrent(1, t)
-        elif int(t * timeDelta % 100) < 3:
-            v1.setCurrent(1, t)
+        if int(t * timeDelta % 321) < 6:
+            v1.setCurrent(1, t, 0)
+        elif int(t * timeDelta % 201) <2:
+            v1.setCurrent(1, t, 0)
         else:
-            v1.setCurrent(0, t)
+            v1.setCurrent(0, t, 0)
 
     v0.calc(t)
     v1.calc(t)
 
-    p = np.array([0, 0, 0, 0])
-    if v0.currentFired() > t - 3:
-        if v0.lastFired() > t-10:
-            p[0] = 1
-        else:
-            p[1] = 1
-    if v1.currentFired() > t - 3:
-        if v1.lastFired() > t-10:
-            p[2] = 1
-        else:
-            p[3] = 1
+    if v0.currentFired() ==t and v0.lastFired() > t-8:
+        v00.setCurrent(v0.v[t],t, 0)
+        v01.setCurrent(v0.v[t],t, 0)
+        v10.setCurrent(v0.v[t],t, 0)
+        v11.setCurrent(v0.v[t],t, 0)
+    elif v0.currentFired() ==t and v0.lastFired() == -1000:
+        v00.setCurrent(v0.v[t],t, 1)
+        v01.setCurrent(v0.v[t],t, 1)
+        v10.setCurrent(v0.v[t],t, 1)
+        v11.setCurrent(v0.v[t],t, 1)
+    elif v1.currentFired() == t and v1.lastFired() > t-8:
+        v00.setCurrent(v1.v[t],t, 2)
+        v01.setCurrent(v1.v[t],t, 2)
+        v10.setCurrent(v1.v[t],t, 2)
+        v11.setCurrent(v1.v[t],t, 2)
+    elif v1.currentFired() == t and v1.lastFired() == -1000:
+        v00.setCurrent(v1.v[t], t, 3)
+        v01.setCurrent(v1.v[t], t, 3)
+        v10.setCurrent(v1.v[t], t, 3)
+        v11.setCurrent(v1.v[t], t, 3)
 
-
-    v00.setCurrent(p, t)
-    v01.setCurrent(p, t)
-    v10.setCurrent(p, t)
-    v11.setCurrent(p, t)
 
     v00.calc(t)
     v01.calc(t)
     v10.calc(t)
     v11.calc(t)
 
-    p = np.array([0, 0, 0, 0])
     if v00.v[t] == 35:
-        p[0] = 1
+        v_true.setCurrent(v00.v[t], t, 0)
+        v_false.setCurrent(v00.v[t], t, 0)
     if v01.v[t] == 35:
-        p[1] = 1
+        v_true.setCurrent(v01.v[t], t, 1)
+        v_false.setCurrent(v01.v[t], t, 1)
     if v10.v[t] == 35:
-        p[2] = 1
+        v_true.setCurrent(v10.v[t], t, 2)
+        v_false.setCurrent(v10.v[t], t, 2)
     if v11.v[t] == 35:
-        p[3] = 1
+        v_true.setCurrent(v11.v[t], t, 3)
+        v_false.setCurrent(v11.v[t], t, 3)
 
-    v_true.setCurrent(p, t)
-    v_false.setCurrent(p, t)
 
     v_true.calc(t)
     v_false.calc(t)
@@ -155,11 +165,11 @@ plt.show()
 
 plt.plot(np.arange(0, timeDelta * T, timeDelta), v_true.v, 'tab:orange')
 plt.plot(np.arange(0, timeDelta * T, timeDelta), v_true.u, 'tab:green')
-plt.plot(np.arange(0, timeDelta * T, timeDelta), v_false.v + 20, 'tab:cyan')
-plt.plot(np.arange(0, timeDelta * T, timeDelta), v_false.u + 20, 'tab:blue')
+plt.plot(np.arange(0, timeDelta * T, timeDelta), v_false.v + 80, 'tab:cyan')
+plt.plot(np.arange(0, timeDelta * T, timeDelta), v_false.u + 80, 'tab:blue')
 
-plt.plot(np.arange(0, timeDelta * T, timeDelta), 30 * v0.p + 40)
-plt.plot(np.arange(0, timeDelta * T, timeDelta), 30 * v1.p - 110)
+plt.plot(np.arange(0, timeDelta * T, timeDelta), 50 * v0.p + 130)
+plt.plot(np.arange(0, timeDelta * T, timeDelta), 50 * v1.p - 130)
 plt.grid(color='grey', linestyle=':', linewidth=1)
 plt.title('last neuron')
 plt.xlabel('time [ms]')
