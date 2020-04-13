@@ -122,7 +122,6 @@ for imagepath in path:
     #
     # cv2.imwrite(output_path, image)
 
-
     line = gray.reshape((1, width*height))
     data = pd.DataFrame(line)
     firstCol = pd.DataFrame(data={'imagePath': [imagepath]})
