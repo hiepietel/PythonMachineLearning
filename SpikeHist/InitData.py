@@ -21,5 +21,3 @@ d = 8
 c = -65
 
 T= n
-
-def return
