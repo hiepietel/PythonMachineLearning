@@ -25,8 +25,8 @@ for imagepath in path:
     image = cv2.imread(str(imagepath))
     image = cv2.resize(image, (width, height))
 
-    i = 0;
-    j= 0;
+    i = 0
+    j = 0
     finished = False
     count_x = 0
     xount_y = 0

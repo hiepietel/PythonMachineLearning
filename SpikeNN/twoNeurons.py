@@ -1,6 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+from contextlib import redirect_stdout
+
+print("log start: ")
+with open('help.txt', 'w') as f:
+    with redirect_stdout(f):
+
 n = 2000
 timeDelta = 0.5  # 5ms
 a = 0.02
@@ -69,6 +75,7 @@ axs[1].set_title("second neuron, activated by first")
 plt.xlabel('time [ms]')
 plt.ylabel('voltage [mV]')
 plt.show()
+print("ASD")
 # plt.plot(np.arange(0, timeDelta * T, timeDelta), vv, np.arange(0, timeDelta * T, timeDelta), uu)
 # plt.title('Simulate a single neuron with injected current')
 # plt.xlabel('time [ms]')
