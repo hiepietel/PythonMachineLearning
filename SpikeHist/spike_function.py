@@ -7,14 +7,14 @@ from Neuron import *
 #from InitData import *
 from Stat import *
 
-neurons_amount = 32
+neurons_amount = 16
 image_list = []
 
 
 
 
 #name_folder = "spike_small_s"
-name_folder = "spike_all_all"
+name_folder = "img5_col"
 path_folder = '../db/img_spike/' + name_folder + '/model/*.jpg'
 path = Path(".")
 path = path.glob(path_folder)
@@ -25,12 +25,10 @@ for imagepath in path:
     image_list.append(str(imagepath))
 
 
+scaler = 1
 
-
-scaler = 4
-
-height = 720 / scaler
-width = 1280 / scaler
+height = 1080 / scaler
+width = 40 / scaler
 
 height = int(height)
 width = int(width)
@@ -50,14 +48,14 @@ c = -65
 T = n
 
 #hist
-treshold = (-14 + neurons_amount * d) * 0.45
-out_treshold = (-14 + image_list_count * d) * 0.45
-hist_count_offset = 35
+treshold = (-14 + neurons_amount * d) * 0.3
+out_treshold = (-14 + image_list_count * d) * 0.3
+hist_count_offset = 70
 
 #sky
-treshold_sky = (-14 + neurons_amount * d) * 0.8
-out_sky_treshold = (-14 + image_list_count * d) * 0.4
-sky_count_offset = 25
+treshold_sky = (-14 + neurons_amount * d) * 0.2
+out_sky_treshold = (-14 + image_list_count * d) * 0.5
+sky_count_offset = 30
 
 max_probe = 200
 
@@ -241,7 +239,7 @@ with open(output_file, 'w') as f, redirect_stdout(f):
     #print('redirected to a file')
     #os.write(stdout_fd, b'not redirected')
     #os.system('echo this also is not redirected')
-    print("log version: 0.1")
+    print("log version: 0.2")
     print("neurons amount: " + str(neurons_amount))
     print("model img amount: " + str(image_list_count))
     print("treshold hist: " + str(treshold))
@@ -268,7 +266,7 @@ with open(output_file, 'w') as f, redirect_stdout(f):
         #     print(str(i) + " hist_fired_tab: " + str(stat.hist_fired_tab[i]) + " sky_fired_tab: " + str(stat.sky_fired_tab[i]))
         image_list_count_true += 1
         totalTime += stat.executionTime
-        os.system(str(imagepath))
+        os.system(str(True))
     path_folder = '../db/img_spike/' + name_folder + '/false/*.jpg'
     path = Path(".")
     path = path.glob(path_folder)
@@ -283,7 +281,7 @@ with open(output_file, 'w') as f, redirect_stdout(f):
         print("hist fired: " + str(stat.hist_fired) + " sky fired: " + str(stat.sky_fired))
         image_list_count_false += 1
         totalTime += stat.executionTime
-        os.system(str(imagepath))
+        os.system(str(False))
     confusionMatrix[1, 0] = image_list_count_false - confusionMatrix[1, 1]
     print(confusionMatrix)
     print("Total Time: " + str(totalTime))
