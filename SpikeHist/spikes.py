@@ -6,7 +6,7 @@ import math
 from Neuron import *
 from InitData import *
 
-neurons_amount = 32
+neurons_amount = 8
 image_list = []
 
 path = Path(".")

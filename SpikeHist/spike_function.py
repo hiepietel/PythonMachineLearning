@@ -7,14 +7,14 @@ from Neuron import *
 #from InitData import *
 from Stat import *
 
-neurons_amount = 16
+neurons_amount = 32
 image_list = []
 
 
 
 
 #name_folder = "spike_small_s"
-name_folder = "img5_col"
+name_folder = "img8_col2"
 path_folder = '../db/img_spike/' + name_folder + '/model/*.jpg'
 path = Path(".")
 path = path.glob(path_folder)
@@ -46,11 +46,11 @@ d = 8
 c = -65
 
 T = n
-
+log_version = 0.5
 #hist
 treshold = (-14 + neurons_amount * d) * 0.3
-out_treshold = (-14 + image_list_count * d) * 0.3
-hist_count_offset = 70
+out_treshold = (-14 + image_list_count * d) * 0.6
+hist_count_offset = 80
 
 #sky
 treshold_sky = (-14 + neurons_amount * d) * 0.2
@@ -239,7 +239,7 @@ with open(output_file, 'w') as f, redirect_stdout(f):
     #print('redirected to a file')
     #os.write(stdout_fd, b'not redirected')
     #os.system('echo this also is not redirected')
-    print("log version: 0.2")
+    print("log version: "+str(log_version))
     print("neurons amount: " + str(neurons_amount))
     print("model img amount: " + str(image_list_count))
     print("treshold hist: " + str(treshold))

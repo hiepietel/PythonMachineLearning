@@ -14,7 +14,7 @@ width = 1920 / scaler
 height = int(height)
 width = int(width)
 
-img = cv.imread('../db/img/sky_best_not_converted/20170701_211107~2.jpg', 1)
+img = cv.imread('../db/img/sky_best_not_converted/20170629_224036_HDR.jpg', 1)
 img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 img = cv.resize(img, (width, height))
 
@@ -44,14 +44,16 @@ plt.imshow(image_part)
 plt.show()
 plt.subplot(2, 1, 1)
 plt.plot(values, '-')
-plt.title('plot and image')
-plt.ylabel('average value of blue piksel')
-
+#plt.title('przykładowe zdjęcie i analiza nieba')
+# plt.ylabel('średnia wartość niebieskich pikseli w kolumnie')
+plt.xticks([])
+plt.yticks([])
 plt.subplot(2, 1, 2)
 plt.imshow(image_part)
-plt.xlabel('width')
-plt.ylabel('high part of image')
-
+#plt.xlabel('width')
+# plt.ylabel('górna część zdjęcia')
+plt.xticks([])
+plt.yticks([])
 plt.show()
 
 hist = cv.calcHist([img], [0], None, [256], [0, 256])
