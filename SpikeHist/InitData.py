@@ -11,9 +11,9 @@ width = int(width)
 taug = 10.0
 frate = 0.002 #[ms^(-1)]
 
-single_iteration_time = 600
-end_spike_time = 200
-n = 5 * single_iteration_time + end_spike_time
+single_iteration_time = 1500
+end_spike_time = 500
+n = 4 * single_iteration_time + end_spike_time
 timeDelta = 0.5  # 5ms
 a = 0.02
 b = 0.2

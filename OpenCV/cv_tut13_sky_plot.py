@@ -36,23 +36,28 @@ for col in b.T:
     i += 1
 
 
-plt.plot(values*height/255/3)
+#plt.plot(values * height/255/3)
+plt.plot(values)
+plt.ylabel('średnia wartość koloru niebieskiego')
+plt.xlabel('długość zdjęcia')
 plt.show()
 plt.imshow(image_part)
+image_part_1 = cv.cvtColor(image_part, cv.COLOR_RGB2BGR)
+#cv.imwrite("C:\\Users\\hiepietel\\Desktop\\b.jpg", image_part_1)
 
 # plt.title("value")
 plt.show()
 plt.subplot(2, 1, 1)
 plt.plot(values, '-')
-plt.title('Przykładowe zdjęcie i analiza nieba')
-plt.ylabel('analiza nieba')
-plt.xticks([])
-plt.yticks([])
+plt.xlabel('średnia wartość koloru niebieskiego')
+plt.ylabel('długość zdjęcia')
+#plt.xticks('średnia wartość koloru niebieskiego')
+#plt.yticks('długość zdjęcia')
 
 plt.subplot(2, 1, 2)
 plt.imshow(image_part)
 #plt.xlabel('width')
-plt.ylabel('1/3 zdjęcia')
+#plt.ylabel('1/3 zdjęcia')
 
 plt.xticks([])
 plt.yticks([])

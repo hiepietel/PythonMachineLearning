@@ -6,11 +6,11 @@ import math
 from Neuron import *
 from InitData import *
 
-neurons_amount = 8
+neurons_amount = 4
 image_list = []
 
 path = Path(".")
-path = path.glob('../db/img_spike/spike_green/*.jpg')
+path = path.glob('../db/img_spike/spike_new/*.jpg')
 
 image_list_count = 0
 for imagepath in path:
@@ -18,15 +18,15 @@ for imagepath in path:
     image_list.append(str(imagepath))
 
 
-treshold = (-14 + neurons_amount * d) * 0.3
-out_treshold = (-14 + image_list_count * d) * 0.5
+treshold = (-14 + neurons_amount * d) * 0.1
+out_treshold = (-14 + image_list_count * d) * 0.2
 
 max_probe = 200
 part_t = 0
 iteration = 0
 
-hist_count_offset = 20
-sky_count_offset = 20
+hist_count_offset = 500
+sky_count_offset = 50
 
 def returnHistogram(imagepath):
     img = cv2.imread(str(imagepath))
@@ -68,7 +68,7 @@ input_neuron_data = InputNeuronData(timeDelta, taug, a, b, c, d)
 # model_hist = returnHistogram(model_imagepath)
 # model_sky = returnSky(model_imagepath)
 
-test_imagepath = '../db/img_spike/test/IMG_20200321_182525.jpg'
+test_imagepath = image_list[0]
 test_hist = returnHistogram(test_imagepath)
 test_sky = returnSky(test_imagepath)
 
@@ -120,7 +120,7 @@ for t in range(T - 1):
     hist_count_out.calc(t)
     sky_count_out.calc(t)
     #last neuron
-    if part_t > single_iteration_time - 50 and part_t < single_iteration_time - 45 and hist_count_out.u_step[t] > treshold:
+    if part_t > single_iteration_time - 140 and part_t < single_iteration_time - 135 and hist_count_out.u_step[t] > treshold:
         hist_out.setCurrent(1, t, 0)
     else:
         hist_out.setCurrent(0, t, 0)
@@ -136,7 +136,7 @@ for t in range(T - 1):
         sky_count_out.u_step[t + 1] = sky_count_out.u[t]
         hist_count_out.u_step[t + 1] = hist_count_out.u[t]
 
-    if t > T - 20 and t < T - 15:
+    if t > T - 320 and t < T - 315:
         if sky_out.u_step[t] > out_treshold and hist_out.u_step[t] > out_treshold:
             print("last neuron fired")
             out_positive.setCurrent(1, t, 0)
@@ -150,115 +150,124 @@ for t in range(T - 1):
     out_negative.calc(t)
 
     part_t += 1
-plt.figure(figsize=(16, 10))
-fig, axs = plt.subplots(neurons_amount)
-plt.ylabel('voltage [mV]')
-# plt.title('histogram spikes')
+
+
+#plt.figure(figsize=(16, 10))
+fig, axs = plt.subplots(neurons_amount, sharex=True, sharey=True)
+#plt.ylabel('voltage [mV]')
+#plt.title('histogram spikes')
+fig.text(0.53, 0.01, 'time [ms]', ha='center')
+fig.text(0.02, 0.48, 'voltage [mV]', va='center', rotation='vertical')
 offset = 0
 for i in range(neurons_amount):
-    axs[i].plot(np.arange(0, timeDelta * T, timeDelta), neurons[i].v, label='neuron v' + str(i))
+    axs[i].plot(np.arange(0, timeDelta * T, timeDelta), neurons[i].v, label='neuron v' + str(i), color="green")
     axs[i].legend(loc="upper right")
 
     # axs[i].plot(np.arange(0, timeDelta * T, timeDelta), neurons[i].u, label = 'neuron u'+ str(i))
-plt.xlabel('time [ms]')
-# sky
+#plt.xlabel('time [ms]')
+#plt.setp(plt.gcf().get_axes(), xticks=[], yticks=[])
+plt.show()
 
-plt.figure(figsize=(16, 10))
-fig, axs = plt.subplots(neurons_amount)
-plt.ylabel('voltage [mV]')
-plt.title('histogram spikes')
+#plt.figure(figsize=(16, 10))
+fig, axs = plt.subplots(neurons_amount, sharex=True, sharey=True)
+#plt.ylabel('voltage [mV]')
+#plt.title('histogram spikes')
+fig.text(0.53, 0.01, 'time [ms]', ha='center')
+fig.text(0.02, 0.48, 'voltage [mV]', va='center', rotation='vertical')
 for i in range(neurons_amount):
-    axs[i].plot(np.arange(0, timeDelta * T, timeDelta), neurons_sky[i].v, label='neuron v' + str(i))
+    axs[i].plot(np.arange(0, timeDelta * T, timeDelta), neurons_sky[i].v, label='neuron v' + str(i), color="blue")
     axs[i].legend(loc="upper right")
     # axs[i].plot(np.arange(0, timeDelta * T, timeDelta), neurons[i].u, label = 'neuron u'+ str(i))
-plt.xlabel('time [ms]')
+#plt.xlabel('time [ms]')
 # plt.figsize((16,9))
+#plt.setp(plt.gcf().get_axes(), xticks=[], yticks=[])
 plt.show()
 
 #show hist plot
-offset = 0
-offset_step = 40
-for imgg in image_list:
-    hist = returnHistogram(imgg)
-    plt.plot(hist + offset, label=imgg)
-    offset += offset_step
-# plt.plot(model_hist, 'tab:green', label='model hist')
-plt.plot(test_hist + offset, 'tab:blue', label='test hist + offset')
-plt.legend(loc="upper left")
-plt.title('histogram + test models')
-plt.show()
+# offset = 0
+# offset_step = 40
+# for imgg in image_list:
+#     hist = returnHistogram(imgg)
+#     plt.plot(hist + offset, label=imgg)
+#     offset += offset_step
+# # plt.plot(model_hist, 'tab:green', label='model hist')
+# plt.plot(test_hist + offset, 'tab:blue', label='test hist + offset')
+# plt.legend(loc="upper left")
+# plt.title('histogram + test models')
+# plt.show()
 
 #show sky plot
-offset = 0
-offset_step = 40
-for imgg in image_list:
-    sky = returnSky(imgg)
-    plt.plot(sky + offset, label=imgg)
-    offset += offset_step
-# plt.plot(model_hist, 'tab:green', label='model hist')
-plt.plot(test_sky + offset, 'tab:blue', label='test sky + offset')
-plt.legend(loc="upper left")
-plt.title('sky + test models')
-plt.show()
+# offset = 0
+# offset_step = 40
+# for imgg in image_list:
+#     sky = returnSky(imgg)
+#     plt.plot(sky + offset, label=imgg)
+#     offset += offset_step
+# # plt.plot(model_hist, 'tab:green', label='model hist')
+# plt.plot(test_sky + offset, 'tab:blue', label='test sky + offset')
+# plt.legend(loc="upper left")
+# plt.title('sky + test models')
+# plt.show()
 
 treshold_np = np.ones(T) * treshold
 
-plt.figure(figsize=(12, 8))
+#plt.figure(figsize=(12, 8))
 
-plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_count_out.v, label='v hist')
-plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_count_out.u, label='u step hist')
-plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_count_out.u_step, label='u step')
+plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_count_out.v, label='v hist', color="green")
+#plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_count_out.u, label='u step hist')
+#plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_count_out.u_step, label='u step')
 
-plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_out.v, label='v_last')
-plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_out.u, label='u_last')
+plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_out.v, label='v_last', color="purple", linewidth=3)
+#plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_out.u, label='u_last')
 
-plt.plot(np.arange(0, timeDelta * T, timeDelta), treshold_np, label='treshold')
-
-plt.grid(color='grey', linestyle=':', linewidth=1)
-plt.title('counter neuron hist')
-plt.legend(loc="upper left", prop={"size": 20})
+#plt.plot(np.arange(0, timeDelta * T, timeDelta), treshold_np, label='treshold')
+#plt.setp(plt.gcf().get_axes(), xticks=[], yticks=[])
+#plt.grid(color='grey', linestyle=':', linewidth=1)
+#plt.title('counter neuron hist')
+#plt.legend(loc="upper left", prop={"size": 20})
 plt.xlabel('time [ms]')
 plt.ylabel('voltage [mV]')
 # plt.figsize((16,9))
 plt.show()
 
-plt.figure(figsize=(12, 8))
-plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_count_out.v, label='v sky')
-plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_count_out.u, label='u step sky')
-plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_count_out.u_step, label='u step')
+# plt.figure(figsize=(12, 8))
+plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_count_out.v, label='v sky', color='blue')
+# plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_count_out.u, label='u step sky')
+# plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_count_out.u_step, label='u step')
 
-plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_out.v, label='v_last')
-plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_out.u, label='u_last')
+plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_out.v, label='v_last', color='orange', linewidth=3)
+# plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_out.u, label='u_last')
 
-plt.plot(np.arange(0, timeDelta * T, timeDelta), treshold_np, label='treshold')
-plt.grid(color='grey', linestyle=':', linewidth=1)
-plt.title('counter neuron sky')
-plt.legend(loc="upper left", prop={"size": 20})
+
+#plt.plot(np.arange(0, timeDelta * T, timeDelta), treshold_np, label='treshold')
+#plt.grid(color='grey', linestyle=':', linewidth=1)
+#plt.setp(plt.gcf().get_axes(), xticks=[], yticks=[])
+#plt.title('counter neuron sky')
+#plt.legend(loc="upper left", prop={"size": 20})
 plt.xlabel('time [ms]')
 plt.ylabel('voltage [mV]')
 # plt.figsize((16,9))
 plt.show()
 
-plt.figure(figsize=(12, 8))
-plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_out.v, label='hist_v_last')
-plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_out.u, label='hist_u_last')
-plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_out.u_step, label='hist_u_step_last')
+plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_out.v, label='hist_v_last', color='purple')
+#plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_out.u, label='hist_u_last')
+#plt.plot(np.arange(0, timeDelta * T, timeDelta), hist_out.u_step, label='hist_u_step_last')
 
-plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_out.v, label='sky_v_last')
-plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_out.u, label='sky_u_last')
-plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_out.u_step, label='sky_u_step_last')
+plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_out.v, label='sky_v_last', color='orange')
+# plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_out.u, label='sky_u_last')
+# plt.plot(np.arange(0, timeDelta * T, timeDelta), sky_out.u_step, label='sky_u_step_last')
 
-plt.plot(np.arange(0, timeDelta * T, timeDelta), out_positive.v, label='v_positive')
-plt.plot(np.arange(0, timeDelta * T, timeDelta), out_positive.u, label='u_positive')
+plt.plot(np.arange(0, timeDelta * T, timeDelta), out_positive.v, label='v_positive', color='lime', linewidth=3)
+# plt.plot(np.arange(0, timeDelta * T, timeDelta), out_positive.u, label='u_positive')
 
-plt.plot(np.arange(0, timeDelta * T, timeDelta), out_negative.v, label='v_negative')
-plt.plot(np.arange(0, timeDelta * T, timeDelta), out_negative.u, label='u_negative')
-out_treshold_np = np.ones(T) * out_treshold
-plt.plot(np.arange(0, timeDelta * T, timeDelta), out_treshold_np, label='treshold')
-
-plt.grid(color='grey', linestyle=':', linewidth=1)
-plt.title('out neuron')
-plt.legend(loc="upper left", prop={"size": 20})
+plt.plot(np.arange(0, timeDelta * T, timeDelta), out_negative.v, label='v_negative', color='red')
+# plt.plot(np.arange(0, timeDelta * T, timeDelta), out_negative.u, label='u_negative')
+# out_treshold_np = np.ones(T) * out_treshold
+# plt.plot(np.arange(0, timeDelta * T, timeDelta), out_treshold_np, label='treshold')
+#plt.setp(plt.gcf().get_axes(), xticks=[], yticks=[])
+#plt.grid(color='grey', linestyle=':', linewidth=1)
+#plt.title('out neuron')
+#plt.legend(loc="upper left", prop={"size": 20})
 plt.xlabel('time [ms]')
 plt.ylabel('voltage [mV]')
 # plt.figsize((16,9))

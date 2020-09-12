@@ -1,7 +1,7 @@
 import numpy as np
 import cv2 as cv
 from matplotlib import pyplot as plt
-
+import numpy
 #img = np.zeros((200,200), np.uint8)
 img = cv.imread('../db/img/sky_best_not_converted/20170629_224036_HDR.jpg', 1)
 img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
@@ -10,7 +10,7 @@ img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 
 imgg = cv.imread('../db/img/sky_best_not_converted/20170629_224036_HDR.jpg', 1)
 imgg = cv.cvtColor(imgg, cv.COLOR_BGR2RGB)
-hist = cv.calcHist([imgg],[0],None,[256],[0,256])
+hist = cv.calcHist([imgg], [0], None, [256], [1,255])
 
 #hist = hist[]
 
@@ -34,6 +34,16 @@ b, g, r, = cv.split(img)
 # plt.setp(plt.gcf().get_axes(), xticks=[], yticks=[]);
 #
 # plt.show()
+bins = numpy.linspace(0, 255, 256)
+#plt.hist(img.ravel(), 255, [0, 255], '-')
+#plt.style.use('ggplot')
+plt.plot(hist)
+#plt.xticks([])
+#plt.yticks([])
+plt.ylabel('ilość pikseli')
+plt.xlabel('wartości pikseli')
+plt.show()
+
 
 # plt.title("value")
 plt.show()
